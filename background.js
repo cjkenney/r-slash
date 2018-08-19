@@ -1,14 +1,13 @@
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({color: '#3aa757'}, function() {
-    console.log('The color is green.');
+'use strict';
+
+chrome.omnibox.onInputChanged.addListener(
+  function(text, suggest) {
+    suggest([
+      {content: text + " one", description: "first redd"}
+    ]);
   });
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {hostEquals: 'developer.chrome.com'},
-      })
-      ],
-          actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
+
+chrome.omnibox.onInputEntered.addListener(
+  function(text) {
+    alert('do you want to go to r/' + text + ' ?');
   });
-});
